@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EazyTimepicker</title>
+    <link rel="stylesheet" href="EazyTimepicker.css">
+    <style type="text/css">
+    body,
+    html {
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .container {
+        width: 500px;
+        height: 100%;
+        margin: auto;
+        text-align: center;
+    }
+
+    .row {
+        margin: 8px 0px;
+    }
+
+    .row label {
+        width: 75px;
+        display: inline-block;
+    }
+
+    .vertical-center {
+        position: relative;
+        top: calc(50% - 70px);
+    }
+    </style>
+    <script type="text/javascript" src="svg.min.js"></script>
+    <script type="text/javascript" src="EazyTimepicker.js"></script>
+    <script>
+    	function Body_Onload() {
+            var picker = new EazyTimepicker();
+            picker.Attach(["startTime","endTime"]);
+            picker.Init();
+    	}
+        
+    </script>
+</head>
+
+<body onload="Body_Onload()">
+    <div class="container">
+        <div class="vertical-center">
+            <h3>Wellcom To EazyTimepicker Demo:</h3>
+            <div class="row">
+                <label for="startTime">StartTime:</label>
+                <input id="startTime" type="text" name="" value="09:55">
+            </div>
+            <div class="row">
+                <label for="endTime">EndTime:</label>
+                <input id="endTime" type="text" name="">
+            </div>
+        </div>
+    </div>
+
+    <div id="EazyTimepicker_ds53513d1a_modal" class="EazyTimepicker-ds53513d1a-modal noselect">
+        <div class="EazyTimepicker-ds53513d1a-backdrop"></div>
+        <div id="EazyTimepicker_ds53513d1a" class="EazyTimepicker-ds53513d1a">
+            <div class="EazyTimepicker-ds53513d1a-title">
+                <span class="EazyTimepicker-ds53513d1a-close">x</span>
+            </div>
+            <div class="EazyTimepicker-ds53513d1a-timeBar">
+                <div class="EazyTimepicker-ds53513d1a-hour">
+                    <input id="EazyTimepicker_ds53513d1a_hour_input" class="EazyTimepicker-ds53513d1a-hour-input" type="number" />
+                </div>
+                <div class="EazyTimepicker-ds53513d1a-colon">:</div>
+                <div class="EazyTimepicker-ds53513d1a-minute">
+                    <input id="EazyTimepicker_ds53513d1a_minute_input" class="EazyTimepicker-ds53513d1a-minute-input" type="number" />
+                </div>
+            </div>
+            <div id="EazyTimepicker_ds53513d1a_content" class="EazyTimepicker-ds53513d1a-content">
+                <div class="EazyTimepicker-ds53513d1a-content-border">
+                    <div id="EazyTimepicker_ds53513d1a_hour_timer" class="EazyTimepicker-ds53513d1a-hour-timer">
+                        <svg id="EazyTimepicker_ds53513d1a_hour_timer_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ></svg>
+                    </div>
+                    <div id="EazyTimepicker_ds53513d1a_minute_timer" class="EazyTimepicker-ds53513d1a-minute-timer">
+                        <svg id="EazyTimepicker_ds53513d1a_minute_timer_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="EazyTimepicker-ds53513d1a-footer">
+                <span id="EazyTimepicker_ds53513d1a_ok_btn">OK</span>
+                <span id="EazyTimepicker_ds53513d1a_close_btn">CANCEL</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
