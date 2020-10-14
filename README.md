@@ -11,3 +11,4 @@ var picker = new EazyTimepicker();
 picker.Attach(["startTime","endTime"]);
 picker.Init();
 ```
+### [Demo](https://wsx9876777.github.io/EazyTimepicker/)
