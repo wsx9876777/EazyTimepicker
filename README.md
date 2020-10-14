@@ -12,7 +12,7 @@ picker.Attach(["startTime","endTime"]);
 picker.Init();
 ```
 ### Theming
-```markdown
+```html
 <div id="EazyTimepicker_ds53513d1a_modal" class="EazyTimepicker-ds53513d1a-modal noselect">
         <div id="EazyTimepicker_ds53513d1a_backdrop" class="EazyTimepicker-ds53513d1a-backdrop"></div>
         <div id="EazyTimepicker_ds53513d1a" class="EazyTimepicker-ds53513d1a">
