@@ -76,7 +76,6 @@ var EazyTimepicker = function () {
         if (hour > 24) {
             hour = "00";
         } else if (hour < 10) {
-            console.log(hour)
             hour = "0" + hour;
         }
         return hour;
@@ -298,7 +297,7 @@ var EazyTimepicker = function () {
             if (!visible) {
                 text.addClass("invisible");
             }
-            text.move(position.x, position.y + 5).addClass('hourText')
+            text.move(position.x, position.y + 6).addClass('hourText')
                 .mousedown(function (e) {
                     _lineOn = true;
                 }).touchstart(function () {
