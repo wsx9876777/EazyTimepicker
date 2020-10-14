@@ -1,7 +1,7 @@
 ## Welcome to GitHub Pages
 ### Installation
 ```markdown
-<script type="text/javascript" src="svg.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.7.1/svg.min.js"></script>
 <script type="text/javascript" src="EazyTimepicker.js"></script>
 ```
 
