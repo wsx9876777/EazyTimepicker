@@ -6,6 +6,7 @@
     left: 0px;
     z-index: 1051;
     display: none;
+    overflow: hidden;
 }
 .EazyTimepicker-ds53513d1a-modal.in {
     display: block;

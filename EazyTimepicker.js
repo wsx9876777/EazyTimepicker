@@ -76,6 +76,7 @@ var EazyTimepicker = function () {
         if (hour > 24) {
             hour = "00";
         } else if (hour < 10) {
+            console.log(hour)
             hour = "0" + hour;
         }
         return hour;
@@ -141,12 +142,15 @@ var EazyTimepicker = function () {
     function DrawCircle(draw, diameter, fillColor, positionHandler) {
         this.draw = draw;
         this.diameter = diameter;
+        this.radius = diameter / 2;
         this.fillColor = fillColor;
         this.positionHandler = positionHandler;
         this.DrawSamllCircleAndText;
         this.AbstractGetByPosition;
         this._drawId = draw.node.id;
         this._circle;
+        this.angle = 360 / this.positionHandler.pieces;
+        this.timer = document.getElementById("EazyTimepicker_ds53513d1a");//for touch
     }
     (function () {
         this.ConvertPositionToAngle = function (centerX, centerY, targetX, targetY) {
@@ -184,17 +188,37 @@ var EazyTimepicker = function () {
         this.GetCircle = function(){
             return this._circle;
         }
+        this._touchmove =function (e) {
+
+            if (!_lineOn) {
+                return false
+            }
+            if (e.detail) {
+                e = e.detail;
+            }
+            var touch = e.touches[0] || e.changedTouches[0],
+                //elm = $(this.node).offset(),
+                hour = this.GetNumByPosition(this.angle,  this.radius, {
+                    offsetX: touch.clientX - this.timer.offsetLeft - 20,
+                    //100 = title+bar+timer margin
+                    offsetY: touch.clientY - this.timer.offsetTop - 100
+                }),
+                svgTextId = this._drawId + "Text" + hour,
+                svgText = SVG.get(svgTextId);
+            //this.OnCircleMove(svgText);
+            this.DrawSamllCircleAndText.MoveToText(svgText, "circle touchmove");
+        };
         this.render = function () {
             this._circle = circle = this.draw.circle(this.diameter).fill(this.fillColor) //圓餅
             var $this = this;
             var angle = 360 / this.positionHandler.pieces;
-            var timer = document.getElementById("EazyTimepicker_ds53513d1a");//for touch
             var radius = this.diameter / 2;
             circle.mousedown(function () {
                 _lineOn = true;
             }).touchstart(function () {
                 _lineOn = true;
             }).mousemove(function (e) {
+                e.preventDefault();
                 if (!_lineOn) {
                     return false
                 }
@@ -203,24 +227,6 @@ var EazyTimepicker = function () {
                     svgText = SVG.get(svgTextId);
                 $this.DrawSamllCircleAndText.MoveToText(svgText, "mousemove");
 
-            }).touchmove(function (e,x) {
-                if (!_lineOn) {
-                    return false
-                }
-                if (e.detail) {
-                    e = e.detail;
-                }
-                var touch = e.touches[0] || e.changedTouches[0],
-                    //elm = $(this.node).offset(),
-                    hour = $this.GetNumByPosition(angle, radius, {
-                        offsetX: touch.clientX - timer.offsetLeft - 20,
-                        //100 = title+bar+timer margin
-                        offsetY: touch.clientY - timer.offsetTop - 100
-                    }),
-                    svgTextId = $this._drawId + "Text" + hour,
-                    svgText = SVG.get(svgTextId);
-                //$this.OnCircleMove(svgText);
-                $this.DrawSamllCircleAndText.MoveToText(svgText, "circle touchmove");
             }).click(function (e) {
                 var hour = $this.GetNumByPosition(angle, radius, e),
                     svgTextId = $this._drawId + "Text" + hour,
@@ -322,7 +328,7 @@ var EazyTimepicker = function () {
                 text.coordinates.x,
                 text.coordinates.y);
             var hour_str = text.timeText;
-            if (hour_str < 10) {
+            if (hour_str.toString().length < 2) {
                 hour_str = "0" + hour_str;
             }
             this._input.value = hour_str;
@@ -389,11 +395,12 @@ var EazyTimepicker = function () {
         _lineOn = false,
         _hourPickerElement,
         _minutePickerElement,
+        _runningCricle,
         _inputHour,
         _inputMinute,
         _closeBtn,
         _okBtn,
-        _inputTime,
+        _backdrop,
         _hourHandStroke = { //時針
             color: '#8ac24b',
             width: 2,
@@ -406,12 +413,14 @@ var EazyTimepicker = function () {
         };
     this.Init = function () {
         var $this = this;
+
         this._ezPickerElement = _ezPickerElement = document.getElementById("EazyTimepicker_ds53513d1a_modal");
         _hourPickerElement = document.getElementById('EazyTimepicker_ds53513d1a_hour_timer');
         _minutePickerElement = document.getElementById('EazyTimepicker_ds53513d1a_minute_timer');
         this._inputHour = _inputHour = document.getElementById('EazyTimepicker_ds53513d1a_hour_input');
         this._inputMinute = _inputMinute = document.getElementById('EazyTimepicker_ds53513d1a_minute_input');
         _closeBtn = document.getElementById('EazyTimepicker_ds53513d1a_close_btn');
+        _backdrop = document.getElementById('EazyTimepicker_ds53513d1a_backdrop');
         _okBtn = document.getElementById('EazyTimepicker_ds53513d1a_ok_btn');
         _inputTime = document.getElementById(this._inputTimeId);
         /***** TimePicker init********/
@@ -476,10 +485,9 @@ var EazyTimepicker = function () {
             _lineOn = false;
         };
 
-        var hourCircle = drawCircle.GetCircle();
         window.ontouchmove = function (e) {
             if (_lineOn) {
-                hourCircle.fire("touchmove",e);
+                _runningCricle._touchmove(e);
             }
         };
 
@@ -489,8 +497,10 @@ var EazyTimepicker = function () {
         /****************************/
         //hour input
         AddClass(_hourPickerElement, "in");
+        _runningCricle = drawCircle;
 
         _inputHour.onfocus = function () {
+            _runningCricle = drawCircle;
             AddClass(_hourPickerElement, "in");
             RemoveClass(_minutePickerElement, "in");
         };
@@ -502,6 +512,7 @@ var EazyTimepicker = function () {
         };
 
         _inputMinute.onfocus = function () {
+            _runningCricle = minuteDrawCircle;
             AddClass(_minutePickerElement, "in");
             RemoveClass(_hourPickerElement, "in");
         };
@@ -518,6 +529,11 @@ var EazyTimepicker = function () {
             RemoveClass(_ezPickerElement, 'in');
         };
 
+        _backdrop.onclick = function () {
+            AddClass(_hourPickerElement, "in");
+            RemoveClass(_minutePickerElement, "in");
+            RemoveClass(_ezPickerElement, 'in');
+        };
         _okBtn.onclick = function () {
             var input = $this._attachedInput;
             var a = _inputHour.value,
