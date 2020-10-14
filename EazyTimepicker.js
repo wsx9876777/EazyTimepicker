@@ -5,7 +5,46 @@ var EazyTimepicker = function () {
     this._inputMinute;
 };
 (function () {
-
+    function Theming(){
+        var picker = document.getElementById("EazyTimepicker_ds53513d1a_modal");
+        if (picker === null) {
+            var newcontent = document.createElement('div');
+        var pickerHtml =
+            '<div id="EazyTimepicker_ds53513d1a_modal" class="EazyTimepicker-ds53513d1a-modal noselect">'+
+                '<div id="EazyTimepicker_ds53513d1a_backdrop" class="EazyTimepicker-ds53513d1a-backdrop"></div>'+
+                '<div id="EazyTimepicker_ds53513d1a" class="EazyTimepicker-ds53513d1a">'+
+                    '<div class="EazyTimepicker-ds53513d1a-title">'+
+                        '<span class="EazyTimepicker-ds53513d1a-close">x</span>'+
+                    '</div>'+
+                    '<div class="EazyTimepicker-ds53513d1a-timeBar">'+
+                        '<div class="EazyTimepicker-ds53513d1a-hour">'+
+                            '<input id="EazyTimepicker_ds53513d1a_hour_input" class="EazyTimepicker-ds53513d1a-hour-input" type="number" />'+
+                        '</div>'+
+                        '<div class="EazyTimepicker-ds53513d1a-colon">:</div>'+
+                        '<div class="EazyTimepicker-ds53513d1a-minute">'+
+                            '<input id="EazyTimepicker_ds53513d1a_minute_input" class="EazyTimepicker-ds53513d1a-minute-input" type="number" />'+
+                        '</div>'+
+                    '</div>'+
+                    '<div id="EazyTimepicker_ds53513d1a_content" class="EazyTimepicker-ds53513d1a-content">'+
+                        '<div class="EazyTimepicker-ds53513d1a-content-border">'+
+                            '<div id="EazyTimepicker_ds53513d1a_hour_timer" class="EazyTimepicker-ds53513d1a-hour-timer">'+
+                                '<svg id="EazyTimepicker_ds53513d1a_hour_timer_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ></svg>'+
+                            '</div>'+
+                            '<div id="EazyTimepicker_ds53513d1a_minute_timer" class="EazyTimepicker-ds53513d1a-minute-timer">'+
+                                '<svg id="EazyTimepicker_ds53513d1a_minute_timer_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ></svg>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="EazyTimepicker-ds53513d1a-footer">'+
+                        '<span id="EazyTimepicker_ds53513d1a_ok_btn">OK</span>'+
+                        '<span id="EazyTimepicker_ds53513d1a_close_btn">CANCEL</span>'+
+                    '</div>'+
+                '</div>'+
+            '</div>';
+            newcontent.innerHTML = pickerHtml;
+            document.body.appendChild(newcontent.firstChild);
+        }
+    }
     function GetHourByTouchPosition(a, b, h) {
         //判斷是否過半，過半則進位
         if (b > 15) {
@@ -410,7 +449,9 @@ var EazyTimepicker = function () {
             width: 260,
             get radius() { return _diameter / 2; }
         };
+        
     this.Init = function () {
+        Theming();
         var $this = this;
 
         this._ezPickerElement = _ezPickerElement = document.getElementById("EazyTimepicker_ds53513d1a_modal");
@@ -422,6 +463,7 @@ var EazyTimepicker = function () {
         _backdrop = document.getElementById('EazyTimepicker_ds53513d1a_backdrop');
         _okBtn = document.getElementById('EazyTimepicker_ds53513d1a_ok_btn');
         _inputTime = document.getElementById(this._inputTimeId);
+        console.log(_inputHour)
         /***** TimePicker init********/
         var radius = _hourCircleStyle.width / 2;
         var diameter = _hourCircleStyle.width;
@@ -497,13 +539,15 @@ var EazyTimepicker = function () {
         //hour input
         AddClass(_hourPickerElement, "in");
         _runningCricle = drawCircle;
-
-        _inputHour.onfocus = function () {
+       
+        this._inputHour.onfocus = function () {
+            
             _runningCricle = drawCircle;
             AddClass(_hourPickerElement, "in");
             RemoveClass(_minutePickerElement, "in");
+            
         };
-
+        console.log(this._inputHour.onfocus)
         _inputHour.onchange = function (e) {
             var hour = GetHourString(this.value);
             this.value = hour;
