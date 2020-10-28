@@ -463,7 +463,7 @@ var EazyTimepicker = function () {
         _backdrop = document.getElementById('EazyTimepicker_ds53513d1a_backdrop');
         _okBtn = document.getElementById('EazyTimepicker_ds53513d1a_ok_btn');
         _inputTime = document.getElementById(this._inputTimeId);
-        console.log(_inputHour)
+        //console.log(_inputHour)
         /***** TimePicker init********/
         var radius = _hourCircleStyle.width / 2;
         var diameter = _hourCircleStyle.width;
@@ -547,7 +547,7 @@ var EazyTimepicker = function () {
             RemoveClass(_minutePickerElement, "in");
             
         };
-        console.log(this._inputHour.onfocus)
+        //console.log(this._inputHour.onfocus)
         _inputHour.onchange = function (e) {
             var hour = GetHourString(this.value);
             this.value = hour;
@@ -611,13 +611,14 @@ var EazyTimepicker = function () {
     }
     this.Attach = function (ary) {
         var $this = this;
+        function attachEvent() {
+            $this._attachedInput = this;
+            $this.OpenPicker();
+        }
         for (let i = 0; i < ary.length; i++) {
             var dom = document.getElementById(ary[i]);
             if (dom.onfocus === null) {
-                dom.onfocus = function () {
-                    $this._attachedInput = document.getElementById(this.id);
-                    $this.OpenPicker();
-                }
+                dom.onfocus = attachEvent
             }
         }
     }
