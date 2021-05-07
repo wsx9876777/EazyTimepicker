@@ -49,6 +49,9 @@
 	gtag('js', new Date());
 	gtag('event', 'logout', {'method': 'Google'});
 	gtag('config', 'UA-196535861-1');
+	gtag('get', 'UA-196535861-1', 'currency', (currency) => {
+	  console.log(currency)
+	})
 	</script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.7.1/svg.min.js"></script>
     <script type="text/javascript" src="EazyTimepicker.js"></script>
