@@ -49,6 +49,14 @@
 	gtag('js', new Date());
 	gtag('event', 'login', {'method': 'Google'});
 	gtag('config', 'UA-196535861-1');
+	
+	const gclidPromise = new Promise(resolve => {
+  gtag('get', 'UA-196535861-1', 'gclid', resolve)
+});
+
+gclidPromise.then((gclid) => {
+  console.log(gclid)
+})
 	</script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.7.1/svg.min.js"></script>
     <script type="text/javascript" src="EazyTimepicker.js"></script>
