@@ -92,6 +92,23 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=590527915405481&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
+
+
+<script type="application/ld+json">
+        {
+            "@@context": "https://schema.org/",
+            "@@type": "Product",
+            "name": "@Model.Name",
+            "image": "@Model.MainImageUrl_768X1050",
+            "description": "@Model.Description.Replace("\r\n", "<br />").Replace("\n", "<br />")",
+            "productId": "@Model.Number",
+            "offers": {
+                "priceCurrency": "TWD",
+                "price": "@Model.Price",
+                "availability": "InStock"
+            }
+        }
+    </script>
 </head>
 
 <body onload="Body_Onload()">
